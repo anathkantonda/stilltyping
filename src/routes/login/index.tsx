@@ -1,0 +1,27 @@
+import Header from '@/components/Header'
+import { createFileRoute, Link } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/login/')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  return (
+    <div className="flex flex-col gap-12">
+      <Header />
+
+      <div className="flex justify-center gap-4">
+        <Link to="/register" className="border bg-black text-white p-2 w-30 font-medium text-center hover:bg-sky-700">Register</Link>
+        <Link to="/login" className="border bg-gray-400 text-black p-2 w-30 font-medium text-center" disabled>Login</Link>
+      </div>
+
+      <div className=" flex flex-col items-center gap-5">
+        <input type="email" placeholder="Email" className="input input-md border p-2 w-75" />
+
+        <input type="password" placeholder="Password" className="input input-md border p-2 w-75" />
+
+        <Link to="/dashboard" className="border p-2 btn bg-black text-white hover:bg-sky-700 w-30 text-center">Login</Link>
+      </div>
+    </div>
+  )
+}
