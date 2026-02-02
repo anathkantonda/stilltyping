@@ -2,6 +2,7 @@ import { useSession, signOut } from '@/lib/auth-client';
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useEffect } from 'react';
 import type { AppUser } from '@/types/auth'
+import Spinner from 'react-bootstrap/Spinner';
 
 export const Route = createFileRoute('/_authenticated')({
   component: AuthLayout,
@@ -23,7 +24,9 @@ function AuthLayout() {
     }
   }, [isPending, session, navigate])
 
-  if (isPending) return <p className="text-7xl">Loading...</p>
+  if (isPending) return <Spinner animation="border" variant="primary" 
+  className="flex flex-col items-center"
+  />
 
   const handleSignOut = async () => {
     await signOut({
@@ -37,9 +40,12 @@ function AuthLayout() {
 
   return (
     <div>
-      <button onClick={handleSignOut} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-        Sign Out
-      </button>
+      <div className="flex justify-end pt-4 pr-4 gap-4 items-center font-medium">
+        <div>Welcome {session?.user.name}!</div>
+        <button onClick={handleSignOut} className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition cursor-pointer">
+          Sign Out
+        </button>
+      </div>
       <Outlet />
     </div>
   )

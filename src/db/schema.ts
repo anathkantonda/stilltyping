@@ -1,5 +1,6 @@
 import { pgTable, uuid, text, timestamp, varchar } from 'drizzle-orm/pg-core'
-import { user } from './auth-schema' 
+import { user } from './auth-schema'
+export * from "./auth-schema"
 
 export const posts = pgTable('posts', {
   id: uuid('id').defaultRandom().primaryKey(),

@@ -1,11 +1,38 @@
+import { useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import Header from '@/components/Header'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { signIn } from '@/lib/auth-client'
 
 export const Route = createFileRoute('/login/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    await signIn.email({
+      email,
+      password,
+      callbackURL: "/dashboard",
+    }, {
+      onSuccess: () => {
+        navigate({ to: '/dashboard' })
+      },
+      onError: (ctx) => {
+        setError(ctx.error.message || 'An error occurred during Login.');
+      }
+    });
+
+  }
+
   return (
     <div className="flex flex-col gap-12">
       <Header />
@@ -15,13 +42,27 @@ function RouteComponent() {
         <Link to="/login" className="border bg-gray-400 text-black p-2 w-30 font-medium text-center" disabled>Login</Link>
       </div>
 
-      <div className=" flex flex-col items-center gap-5">
-        <input type="email" placeholder="Email" className="input input-md border p-2 w-75" />
+      <form onSubmit={handleSubmit}>
+        <div className=" flex flex-col items-center gap-5">
+          <input type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email" className="input input-md border p-2 w-75" />
 
-        <input type="password" placeholder="Password" className="input input-md border p-2 w-75" />
+          <input type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password" className="input input-md border p-2 w-75" 
+          />
 
-        <Link to="/dashboard" className="border p-2 btn bg-black text-white hover:bg-sky-700 w-30 text-center">Login</Link>
-      </div>
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+
+          <button type="submit" className="border p-2 btn bg-black text-white hover:bg-sky-700 w-30 text-center cursor-pointer">
+            Login
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
+

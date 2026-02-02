@@ -71,7 +71,7 @@ function RouteComponent() {
 
           {error && <p className="text-red-600 text-sm font-medium">{error}</p>}
 
-          <button type="submit" className="border p-2 btn bg-black text-white hover:bg-sky-700 w-30 text-center">
+          <button type="submit" className="border p-2 btn bg-black text-white hover:bg-sky-700 w-30 text-center cursor-pointer">
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </div>
