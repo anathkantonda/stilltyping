@@ -14,7 +14,6 @@ const authMiddleware = createMiddleware()
     .server(async ({ next }) => {
         const req = getRequest();
         const session = await auth.api.getSession({ headers: req.headers });
-
         if (!session) {
             throw new Error("Unauthorized");
         }

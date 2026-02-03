@@ -15,6 +15,7 @@ import { Route as RegisterIndexRouteImport } from './routes/register/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthenticatedProfileAtusernameRouteImport } from './routes/_authenticated/profile/@$username'
 import { Route as AuthenticatedOnboardingUsernameRouteImport } from './routes/_authenticated/onboarding/username'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -46,6 +47,12 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedProfileAtusernameRoute =
+  AuthenticatedProfileAtusernameRouteImport.update({
+    id: '/profile/@$username',
+    path: '/profile/@$username',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedOnboardingUsernameRoute =
   AuthenticatedOnboardingUsernameRouteImport.update({
     id: '/onboarding/username',
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/login/': typeof LoginIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/onboarding/username': typeof AuthenticatedOnboardingUsernameRoute
+  '/profile/@$username': typeof AuthenticatedProfileAtusernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginIndexRoute
   '/register': typeof RegisterIndexRoute
   '/onboarding/username': typeof AuthenticatedOnboardingUsernameRoute
+  '/profile/@$username': typeof AuthenticatedProfileAtusernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -77,6 +86,7 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/_authenticated/onboarding/username': typeof AuthenticatedOnboardingUsernameRoute
+  '/_authenticated/profile/@$username': typeof AuthenticatedProfileAtusernameRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/register/'
     | '/onboarding/username'
+    | '/profile/@$username'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/onboarding/username'
+    | '/profile/@$username'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -104,6 +116,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/register/'
     | '/_authenticated/onboarding/username'
+    | '/_authenticated/profile/@$username'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -159,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/profile/@$username': {
+      id: '/_authenticated/profile/@$username'
+      path: '/profile/@$username'
+      fullPath: '/profile/@$username'
+      preLoaderRoute: typeof AuthenticatedProfileAtusernameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding/username': {
       id: '/_authenticated/onboarding/username'
       path: '/onboarding/username'
@@ -172,11 +192,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOnboardingUsernameRoute: typeof AuthenticatedOnboardingUsernameRoute
+  AuthenticatedProfileAtusernameRoute: typeof AuthenticatedProfileAtusernameRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOnboardingUsernameRoute: AuthenticatedOnboardingUsernameRoute,
+  AuthenticatedProfileAtusernameRoute: AuthenticatedProfileAtusernameRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

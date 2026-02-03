@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useLoaderData, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { getPostsWithUsers, createPost } from '@/server/posts'
@@ -55,10 +55,18 @@ function RouteComponent() {
 
       <div className="space-y-4">
         {posts.map((post) => (
-          <div key={post.id} className="p-4 border rounded-xl shadow-lg bg-white">
-            <div className="text-sm font-bold text-blue-600 mb-1">
+          <div
+            key={post.id}
+            className="p-4 border rounded-xl shadow-lg bg-white"
+          >
+            <Link
+              to="/profile/@$username"
+              params={{ username: post.username || '' }}
+              className="text-sm font-bold text-blue-600 mb-1 hover:underline inline-block"
+            >
               @{post.username}
-            </div>
+            </Link>
+
             <p className="text-gray-800">{post.content}</p>
           </div>
         ))}
